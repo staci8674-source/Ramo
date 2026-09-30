@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Día de los Hot Wheels 💙</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito:wght@400;600;700;800&display=swap');
+
+:root{
+    --azul:#159cff;
+    --azul2:#0065e8;
+    --azul3:#7dd8ff;
+    --noche:#020713;
+    --texto:#f4f9ff;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html,body{
+    width:100%;
+    min-height:100%;
+}
+
+body{
+    background:#02040a;
+    color:var(--texto);
+    font-family:Nunito,Arial,sans-serif;
+    overflow-x:hidden;
+}
+
+#loading{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        radial-gradient(circle at 50% 35%,rgba(0,116,255,.18),transparent 35%),
+        #000;
+    transition:opacity .9s ease,visibility .9s ease;
+}
+
+#loading.oculto{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.loader{
+    width:min(720px,90vw);
+    text-align:center;
+}
+
+.loader h1{
+    font-family:"DM Serif Display",serif;
+    font-size:clamp(2rem,7vw,4.5rem);
+    line-height:1.05;
+    color:#8bd7ff;
+    text-shadow:0 0 8px #4ab9ff,0 0 30px rgba(0,142,255,.7);
+    margin-bottom:45px;
+}
+
+.pista{
+    position:relative;
+    width:min(560px,82vw);
+    height:55px;
+    margin:auto;
+}
+
+.pista-linea{
+    position:absolute;
+    left:0;
+    right:0;
+    top:30px;
+    height:7px;
+    border-radius:10px;
+    background:linear-gradient(90deg,#0076ff,#6fe8ff,#0076ff);
+    box-shadow:0 0 15px #00aaff,0 0 30px rgba(0,150,255,.55);
+}
+
+.loader-car{
+    position:absolute;
+    top:-9px;
+    left:0;
+    font-size:48px;
+    transform: scaleX(-1);
+    animation:carroCarga 3.2s linear forwards;
+}
+
+.porcentaje{
+    margin-top:35px;
+    font-size:2.7rem;
+    font-weight:800;
+    color:#75edff;
+    text-shadow:0 0 12px #00baff;
+}
+
+.carga-sub{
+    margin-top:10px;
+    color:#93a8bd;
+    font-size:.95rem;
+}
+
+
+
+
+#regalo{
+    min-height:100vh;
+    position:relative;
+    display:none;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 50% 65%,rgba(0,139,255,.28),transparent 30%),
+        radial-gradient(circle at 20% 50%,rgba(0,77,180,.16),transparent 28%),
+        linear-gradient(180deg,#020610 0%,#061127 67%,#02040a 100%);
+}
+
+#regalo.visible{
+    display:block;
+    animation:entradaEscena 1.2s ease both;
+}
+
+.estrellas{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background-image:
+        radial-gradient(circle,rgba(255,255,255,.9) 0 1px,transparent 2px),
+        radial-gradient(circle,rgba(126,212,255,.65) 0 1px,transparent 2px);
+    background-size:125px 150px,190px 210px;
+    background-position:15px 20px,80px 90px;
+    opacity:.48;
+    animation:estrellas 8s ease-in-out infinite alternate;
+}
+
+.glow{
+    position:absolute;
+    width:720px;
+    height:720px;
+    max-width:90vw;
+    max-height:90vw;
+    left:50%;
+    top:58%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:rgba(0,135,255,.16);
+    filter:blur(70px);
+    pointer-events:none;
+}
+
+
+
+.encabezado{
+    position:relative;
+    z-index:20;
+    text-align:center;
+    padding:38px 18px 0;
+}
+
+.encabezado h2{
+    font-family:"DM Serif Display",serif;
+    font-size:clamp(2.5rem,7vw,5rem);
+    line-height:1;
+    color:#24aaff;
+    text-shadow:0 0 8px #008fff,0 0 25px rgba(0,149,255,.7);
+}
+
+.encabezado p{
+    margin-top:12px;
+    color:#d6e9ff;
+    font-size:clamp(.95rem,2.5vw,1.15rem);
+}
+
+.instruccion{
+    display:inline-block;
+    margin-top:13px;
+    padding:8px 17px;
+    border:1px solid rgba(126,214,255,.4);
+    border-radius:30px;
+    background:rgba(4,22,48,.6);
+    color:#9fddff;
+    font-size:.86rem;
+}
+
+
+.ramo{
+    width:min(1050px,98vw);
+    height:790px;
+    margin:0 auto;
+    position:relative;
+}
+
+
+.ramo::before{
+    content:"";
+    position:absolute;
+    width:700px;
+    height:580px;
+    left:50%;
+    top:115px;
+    transform:translateX(-50%);
+    border-radius:50%;
+    background:rgba(0,137,255,.12);
+    filter:blur(35px);
+}
+
+
+.envoltura{
+    position:absolute;
+    z-index:1;
+    left:50%;
+    bottom:65px;
+    width:900px;
+    height:470px;
+    transform:translateX(-50%);
+    pointer-events:none;
+}
+
+.envoltura::before,
+.envoltura::after{
+    content:"";
+    position:absolute;
+    bottom:0;
+    width:430px;
+    height:420px;
+    border:1.5px solid rgba(225,245,255,.32);
+    background:
+        linear-gradient(135deg,
+            rgba(255,255,255,.10) 0 12%,
+            rgba(126,207,255,.025) 12% 35%,
+            rgba(255,255,255,.13) 35% 39%,
+            rgba(104,191,255,.025) 39% 63%,
+            rgba(255,255,255,.09) 63% 67%,
+            rgba(108,196,255,.018) 67% 100%);
+    box-shadow:
+        inset 0 0 18px rgba(255,255,255,.10),
+        0 0 8px rgba(125,210,255,.05);
+    clip-path:polygon(0 23%,100% 4%,88% 78%,77% 100%,12% 93%);
+}
+
+.envoltura::before{
+    left:-20px;
+    transform:rotate(-7deg);
+}
+
+.envoltura::after{
+    right:-20px;
+    transform:scaleX(-1) rotate(-7deg);
+}
+
+.envoltura .pliegue{
+    position:absolute;
+    bottom:0;
+    left:50%;
+    width:420px;
+    height:410px;
+    transform:translateX(-50%);
+    border:1.5px solid rgba(235,249,255,.30);
+    background:
+        linear-gradient(90deg,
+            rgba(255,255,255,.08),
+            rgba(130,210,255,.015) 18%,
+            rgba(255,255,255,.10) 34%,
+            rgba(110,194,255,.018) 52%,
+            rgba(255,255,255,.09) 70%,
+            rgba(130,210,255,.015));
+    clip-path:polygon(8% 12%,50% 0,92% 12%,82% 100%,18% 100%);
+}
+
+.tallo{
+    position:absolute;
+    width:8px;
+    height:430px;
+    bottom:145px;
+    left:50%;
+    z-index:2;
+    border-radius:20px;
+    background:linear-gradient(90deg,#064b29,#20a35a,#064224);
+    transform-origin:bottom;
+    box-shadow:0 0 5px rgba(50,180,100,.3);
+}
+
+.t1{transform:translateX(-50%) rotate(-25deg);height:430px}
+.t2{transform:translateX(-50%) rotate(-17deg);height:470px}
+.t3{transform:translateX(-50%) rotate(-7deg);height:500px}
+.t4{transform:translateX(-50%) rotate(7deg);height:500px}
+.t5{transform:translateX(-50%) rotate(17deg);height:470px}
+.t6{transform:translateX(-50%) rotate(25deg);height:430px}
+.t7{transform:translateX(-50%) rotate(-11deg);height:450px}
+.t8{transform:translateX(-50%) rotate(11deg);height:450px}
+
+.hoja{
+    position:absolute;
+    z-index:4;
+    width:72px;
+    height:35px;
+    border-radius:100% 0 100% 0;
+    background:linear-gradient(135deg,#2da961,#075d32);
+    box-shadow:inset 4px 2px 6px rgba(255,255,255,.12),0 3px 5px rgba(0,0,0,.3);
+}
+
+.h1{left:20%;top:430px;transform:rotate(-32deg)}
+.h2{left:28%;top:500px;transform:rotate(28deg)}
+.h3{right:20%;top:430px;transform:scaleX(-1) rotate(-32deg)}
+.h4{right:28%;top:500px;transform:scaleX(-1) rotate(28deg)}
+.h5{left:39%;top:555px;transform:rotate(-15deg)}
+.h6{right:39%;top:555px;transform:scaleX(-1) rotate(-15deg)}
+
+
+.flor{
+    position:absolute;
+    width:128px;
+    height:128px;
+    z-index:6;
+    transform-origin:50% 90%;
+    animation:florEntrada .9s ease both, brisaFlor 5s ease-in-out infinite;
+}
+
+.flor .petalo{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:60px;
+    height:83px;
+    margin-left:-30px;
+    margin-top:-68px;
+    border-radius:55% 55% 48% 48%;
+    background:
+        radial-gradient(circle at 34% 20%,rgba(255,255,255,.38),transparent 17%),
+        linear-gradient(145deg,#58d4ff 0%,#0879e6 45%,#043d99 100%);
+    border:1px solid rgba(85,201,255,.2);
+    box-shadow:
+        inset 3px 4px 7px rgba(255,255,255,.2),
+        inset -6px -9px 12px rgba(0,23,93,.32),
+        0 4px 9px rgba(0,25,100,.28);
+    transform-origin:50% 100%;
+}
+
+.flor .petalo:nth-child(1){transform:rotate(0deg) translateY(-20px) scale(.93)}
+.flor .petalo:nth-child(2){transform:rotate(30deg) translateY(-19px) scale(.97)}
+.flor .petalo:nth-child(3){transform:rotate(60deg) translateY(-20px) scale(.93)}
+.flor .petalo:nth-child(4){transform:rotate(90deg) translateY(-19px) scale(.97)}
+.flor .petalo:nth-child(5){transform:rotate(120deg) translateY(-20px) scale(.93)}
+.flor .petalo:nth-child(6){transform:rotate(150deg) translateY(-19px) scale(.97)}
+.flor .petalo:nth-child(7){transform:rotate(180deg) translateY(-20px) scale(.93)}
+.flor .petalo:nth-child(8){transform:rotate(210deg) translateY(-19px) scale(.97)}
+.flor .petalo:nth-child(9){transform:rotate(240deg) translateY(-20px) scale(.93)}
+.flor .petalo:nth-child(10){transform:rotate(270deg) translateY(-19px) scale(.97)}
+.flor .petalo:nth-child(11){transform:rotate(300deg) translateY(-20px) scale(.93)}
+.flor .petalo:nth-child(12){transform:rotate(330deg) translateY(-19px) scale(.97)}
+
+
+.flor::before{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:82px;
+    height:82px;
+    transform:translate(-50%,-50%) rotate(24deg);
+    border-radius:56% 44% 58% 42%;
+    background:
+        radial-gradient(circle at 30% 23%,rgba(255,255,255,.3),transparent 17%),
+        linear-gradient(145deg,#39c7ff,#0877df 58%,#043786);
+    box-shadow:
+        inset 4px 4px 8px rgba(255,255,255,.17),
+        inset -6px -7px 10px rgba(0,25,100,.28);
+    z-index:2;
+}
+
+.flor::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:57px;
+    height:57px;
+    transform:translate(-50%,-50%) rotate(-30deg);
+    border-radius:52% 48% 55% 45%;
+    background:
+        radial-gradient(circle at 32% 22%,rgba(255,255,255,.4),transparent 18%),
+        linear-gradient(145deg,#65ddff,#0d87e8 55%,#0648a1);
+    box-shadow:inset 3px 3px 7px rgba(255,255,255,.2);
+    z-index:3;
+}
+
+.centro{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:27px;
+    height:27px;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 25%,#9ceaff,#0757b5 58%,#02295f);
+    box-shadow:0 0 15px rgba(60,180,255,.55);
+    z-index:5;
+}
+
+.f1{left:19%;top:205px;animation-delay:.1s,0s}
+.f2{left:33%;top:125px;animation-delay:.25s,.7s}
+.f3{left:50%;top:145px;animation-delay:.4s,1.2s}
+.f4{left:67%;top:125px;animation-delay:.55s,.4s}
+.f5{left:81%;top:205px;animation-delay:.7s,1.7s}
+.f6{left:27%;top:285px;animation-delay:.85s,.8s}
+.f7{left:50%;top:305px;animation-delay:1s,2s}
+.f8{left:73%;top:285px;animation-delay:1.15s,.5s}
+
+
+.carreras{
+    position:absolute;
+    z-index:10;
+    left:50%;
+    top:120px;
+    width:900px;
+    height:430px;
+    max-width:95vw;
+    transform:translateX(-50%);
+}
+
+.carrito{
+    position:absolute;
+    width:142px;
+    background:transparent;
+    border:0;
+    cursor:pointer;
+    padding:0;
+    opacity:0;
+    filter:drop-shadow(0 10px 8px rgba(0,0,0,.5));
+    transition:
+        opacity .55s ease,
+        transform .45s cubic-bezier(.2,.9,.25,1.25),
+        filter .3s;
+}
+
+.carrito.aparecido{
+    opacity:1;
+}
+
+.carrito:hover{
+    filter:drop-shadow(0 15px 15px rgba(0,160,255,.48));
+    z-index:20;
+}
+
+.carrito img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:8px;
+    box-shadow:0 0 0 2px rgba(255,255,255,.14),0 10px 20px rgba(0,0,0,.45);
+}
+
+.carrito:nth-child(1){left:10%;top:115px;transform:rotate(-10deg) translateY(65px) scale(.72)}
+.carrito:nth-child(2){left:28%;top:30px;transform:rotate(-4deg) translateY(65px) scale(.72)}
+.carrito:nth-child(3){right:28%;top:30px;transform:rotate(4deg) translateY(65px) scale(.72)}
+.carrito:nth-child(4){right:10%;top:115px;transform:rotate(10deg) translateY(65px) scale(.72)}
+.carrito:nth-child(5){left:37%;top:180px;transform:rotate(-2deg) translateY(65px) scale(.72)}
+.carrito:nth-child(6){right:37%;top:195px;transform:rotate(2deg) translateY(65px) scale(.72)}
+
+.carrito.aparecido:nth-child(1){transform:rotate(-10deg) translateY(0) scale(.84)}
+.carrito.aparecido:nth-child(2){transform:rotate(-4deg) translateY(0) scale(.84)}
+.carrito.aparecido:nth-child(3){transform:rotate(4deg) translateY(0) scale(.84)}
+.carrito.aparecido:nth-child(4){transform:rotate(10deg) translateY(0) scale(.84)}
+.carrito.aparecido:nth-child(5){transform:rotate(-2deg) translateY(0) scale(.84)}
+.carrito.aparecido:nth-child(6){transform:rotate(2deg) translateY(0) scale(.84)}
+
+
+.liston{
+    position:absolute;
+    z-index:15;
+    left:50%;
+    bottom:10px;
+    width:250px;
+    height:185px;
+    transform:translateX(-50%);
+}
+
+.ala{
+    position:absolute;
+    top:0;
+    width:116px;
+    height:92px;
+    background:
+        linear-gradient(135deg,#67d7ff 0%,#087de9 45%,#03459b 100%);
+    box-shadow:0 10px 17px rgba(0,0,0,.4);
+}
+
+.ala.izq{
+    left:0;
+    border-radius:15px 80px 20px 80px;
+    transform:rotate(12deg);
+}
+
+.ala.der{
+    right:0;
+    border-radius:80px 15px 80px 20px;
+    transform:rotate(-12deg);
+}
+
+.nudo{
+    position:absolute;
+    z-index:5;
+    left:50%;
+    top:31px;
+    transform:translateX(-50%);
+    width:62px;
+    height:55px;
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 22%,#8ce6ff,#0879dc 58%,#033d8d);
+    box-shadow:0 0 18px rgba(30,163,255,.5);
+}
+
+.liston::before,
+.liston::after{
+    content:"";
+    position:absolute;
+    top:68px;
+    width:54px;
+    height:125px;
+    background:linear-gradient(90deg,#0754b4,#26b1ff,#06499e);
+    clip-path:polygon(8% 0,92% 0,100% 84%,50% 100%,0 84%);
+    box-shadow:4px 7px 8px rgba(0,0,0,.25);
+}
+
+.liston::before{left:42px;transform:rotate(4deg)}
+.liston::after{right:42px;transform:rotate(-4deg)}
+
+ 
+#visor{
+    position:fixed;
+    inset:0;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(0,0,0,.78);
+    backdrop-filter:blur(9px);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:.35s;
+}
+
+#visor.activo{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+}
+
+.escena-tarjeta{
+    width:min(350px,84vw);
+    height:min(510px,76vh);
+    perspective:1300px;
+}
+
+.tarjeta{
+    position:relative;
+    width:100%;
+    height:100%;
+    transform-style:preserve-3d;
+    transition:transform .9s cubic-bezier(.2,.8,.2,1);
+    cursor:pointer;
+}
+
+.tarjeta.girada{
+    transform:rotateY(180deg);
+}
+
+.cara{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:0 25px 70px rgba(0,0,0,.7);
+}
+
+.frente{
+    background:#061326;
+    border:1px solid rgba(90,198,255,.5);
+}
+
+.frente img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    background:linear-gradient(180deg,#071b35,#020711);
+}
+
+.atras{
+    transform:rotateY(180deg);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px;
+    text-align:center;
+    background:
+        radial-gradient(circle at 50% 25%,rgba(30,171,255,.25),transparent 35%),
+        linear-gradient(145deg,#071c3a,#020816);
+    border:1px solid rgba(90,198,255,.55);
+}
+
+.contenido{
+    width:100%;
+}
+
+.icono{
+    font-size:3.2rem;
+    margin-bottom:14px;
+    filter:drop-shadow(0 0 10px #25aaff);
+}
+
+.contenido h3{
+    color:#66d7ff;
+    font-size:1.65rem;
+    margin-bottom:15px;
+    text-shadow:0 0 12px rgba(0,169,255,.55);
+}
+
+.contenido p{
+    color:#e6f6ff;
+    line-height:1.7;
+    font-size:1rem;
+}
+
+.cerrar{
+    margin-top:25px;
+    padding:11px 21px;
+    border:0;
+    border-radius:25px;
+    background:linear-gradient(135deg,#22b8ff,#0068dc);
+    color:white;
+    font-weight:800;
+    cursor:pointer;
+    box-shadow:0 8px 18px rgba(0,120,255,.3);
+}
+
+
+
+
+@keyframes carroCarga{
+    from{left:0}
+    to{left:calc(100% - 55px)}
+}
+
+@keyframes entradaEscena{
+    from{opacity:0;transform:scale(.98)}
+    to{opacity:1;transform:scale(1)}
+}
+
+@keyframes estrellas{
+    from{transform:translateY(0)}
+    to{transform:translateY(-10px)}
+}
+
+@keyframes florEntrada{
+    from{opacity:0;transform:translateY(35px) scale(.7)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+@keyframes brisaFlor{
+    0%,100%{margin-left:0}
+    50%{margin-left:3px}
+}
+
+
+@media(max-width:700px){
+
+    .encabezado{
+        padding-top:28px;
+    }
+
+    .encabezado h2{
+        font-size:clamp(2rem,10vw,3.1rem);
+    }
+
+    .instruccion{
+        font-size:.76rem;
+    }
+
+    .ramo{
+        height:650px;
+        width:100vw;
+    }
+
+    .envoltura{
+        width:100vw;
+        height:430px;
+        bottom:50px;
+    }
+
+    .envoltura::before,
+    .envoltura::after{
+        width:53vw;
+        height:390px;
+    }
+
+    .envoltura .pliegue{
+        width:48vw;
+        height:370px;
+    }
+
+    .envoltura .borde.b1,
+    .envoltura .borde.b2{
+        width:40vw;
+    }
+
+    .flor{
+        width:92px;
+        height:92px;
+    }
+
+    .flor .petalo{
+        width:38px;
+        height:54px;
+        margin-left:-19px;
+        margin-top:-44px;
+    }
+
+    .flor::before{width:54px;height:54px}
+    .flor::after{width:38px;height:38px}
+    .centro{width:17px;height:17px}
+
+    .f1{left:12%;top:175px}
+    .f2{left:31%;top:125px}
+    .f3{left:50%;top:160px}
+    .f4{left:69%;top:125px}
+    .f5{left:82%;top:180px}
+    .f6{left:20%;top:275px}
+    .f7{left:50%;top:300px}
+    .f8{left:72%;top:275px}
+
+    .carreras{
+        top:115px;
+        height:360px;
+    }
+
+    .carrito{
+        width:100px;
+    }
+
+    .carrito:nth-child(1){left:2%;top:95px}
+    .carrito:nth-child(2){left:23%;top:18px}
+    .carrito:nth-child(3){right:23%;top:18px}
+    .carrito:nth-child(4){right:2%;top:95px}
+    .carrito:nth-child(5){left:32%;top:150px}
+    .carrito:nth-child(6){right:32%;top:165px}
+
+    .carrito.aparecido:nth-child(1){transform:rotate(-12deg) scale(.82)}
+    .carrito.aparecido:nth-child(2){transform:rotate(-4deg) scale(.82)}
+    .carrito.aparecido:nth-child(3){transform:rotate(4deg) scale(.82)}
+    .carrito.aparecido:nth-child(4){transform:rotate(12deg) scale(.82)}
+    .carrito.aparecido:nth-child(5){transform:rotate(-1deg) scale(.82)}
+    .carrito.aparecido:nth-child(6){transform:rotate(2deg) scale(.82)}
+
+    .liston{
+        transform:translateX(-50%) scale(.72);
+        bottom:-5px;
+    }
+}
+
+@media(max-width:420px){
+    .ramo{height:590px}
+    .carrito{width:82px}
+    .flor{transform:scale(.82)}
+    .envoltura{height:380px}
+    .envoltura::before,
+    .envoltura::after{height:350px}
+}
+
+.envoltura{
+    z-index:1;
+    width:1000px;
+    height:610px;
+    bottom:45px;
+}
+
+.envoltura::before,
+.envoltura::after{
+    width:500px;
+    height:555px;
+    border:1px solid rgba(235,249,255,.42);
+    background:
+      linear-gradient(150deg,
+        rgba(255,255,255,.20) 0%,
+        rgba(130,210,255,.035) 18%,
+        rgba(255,255,255,.12) 38%,
+        rgba(120,205,255,.025) 58%,
+        rgba(255,255,255,.15) 77%,
+        rgba(100,190,255,.025) 100%);
+    box-shadow:inset 0 0 35px rgba(255,255,255,.10);
+    clip-path:polygon(0 23%,100% 0,91% 82%,72% 100%,10% 91%);
+}
+
+.envoltura::before{left:-22px;transform:rotate(-7deg)}
+.envoltura::after{right:-22px;transform:scaleX(-1) rotate(-7deg)}
+
+.envoltura .pliegue{
+    z-index:1;
+    width:455px;
+    height:520px;
+    background:
+      linear-gradient(88deg,
+        rgba(255,255,255,.15),
+        rgba(135,215,255,.025) 24%,
+        rgba(255,255,255,.18) 42%,
+        rgba(115,205,255,.025) 62%,
+        rgba(255,255,255,.15) 82%,
+        rgba(100,190,255,.02));
+    border:1px solid rgba(255,255,255,.38);
+    clip-path:polygon(5% 13%,50% 0,95% 13%,82% 100%,18% 100%);
+}
+
+.envoltura .borde{
+    z-index:4;
+    height:4px;
+    opacity:.82;
+}
+.envoltura .borde.b1{width:310px;left:14px;top:150px;transform:rotate(-17deg)}
+.envoltura .borde.b2{width:310px;right:14px;top:150px;transform:rotate(17deg)}
+.envoltura .borde.b3{width:390px;bottom:55px}
+
+
+.tallo{
+    z-index:2;
+    width:7px;
+    bottom:125px;
+    left:50%;
+    height:420px;
+    transform-origin:50% 100%;
+    background:linear-gradient(90deg,#043d20,#23a95c 45%,#07502a);
+    box-shadow:0 0 4px rgba(37,190,99,.35);
+}
+
+
+
+.t1{height:425px;transform:translateX(-50%) rotate(-38deg)}
+.t2{height:430px;transform:translateX(-50%) rotate(-14deg)}
+.t3{height:410px;transform:translateX(-50%) rotate(9deg)}
+.t4{height:430px;transform:translateX(-50%) rotate(14deg)}
+.t5{height:415px;transform:translateX(-50%) rotate(38deg)}
+.t6{height:330px;transform:translateX(-50%) rotate(-38deg)}
+.t7{height:320px;transform:translateX(-50%) rotate(21deg)}
+.t8{height:330px;transform:translateX(-50%) rotate(38deg)}
+
+.flor{
+    z-index:7;
+}
+.flor::after{
+    box-shadow:
+      inset 3px 3px 7px rgba(255,255,255,.20),
+      0 8px 0 -4px #0c7138;
+}
+
+
+.f1{left:14%;top:205px}
+.f2{left:31%;top:125px}
+.f3{left:48%;top:165px}
+.f4{left:65%;top:125px}
+.f5{left:82%;top:205px}
+.f6{left:25%;top:315px}
+.f7{left:48%;top:330px}
+.f8{left:71%;top:315px}
+
+
+
+.carreras{
+    z-index:12;
+    top:105px;
+    width:930px;
+    height:455px;
+}
+
+.carrito{
+    width:155px;
+}
+
+.carrito:nth-child(1){left:3%;top:95px;transform:rotate(-10deg) translateY(55px) scale(.78)}
+.carrito:nth-child(2){left:27%;top:8px;transform:rotate(-4deg) translateY(55px) scale(.78)}
+.carrito:nth-child(3){right:27%;top:8px;transform:rotate(4deg) translateY(55px) scale(.78)}
+.carrito:nth-child(4){right:3%;top:95px;transform:rotate(10deg) translateY(55px) scale(.78)}
+.carrito:nth-child(5){left:34%;top:205px;transform:rotate(-2deg) translateY(55px) scale(.78)}
+.carrito:nth-child(6){right:34%;top:220px;transform:rotate(2deg) translateY(55px) scale(.78)}
+
+.carrito.aparecido:nth-child(1){transform:rotate(-10deg) translateY(0) scale(.88)}
+.carrito.aparecido:nth-child(2){transform:rotate(-4deg) translateY(0) scale(.88)}
+.carrito.aparecido:nth-child(3){transform:rotate(4deg) translateY(0) scale(.88)}
+.carrito.aparecido:nth-child(4){transform:rotate(10deg) translateY(0) scale(.88)}
+.carrito.aparecido:nth-child(5){transform:rotate(-2deg) translateY(0) scale(.88)}
+.carrito.aparecido:nth-child(6){transform:rotate(2deg) translateY(0) scale(.88)}
+
+/* El ramo termina en un listón más integrado con la envoltura. */
+.liston{
+    z-index:18;
+    bottom:0;
+}
+
+
+@media(max-width:700px){
+    .envoltura{width:100vw;height:470px;bottom:35px}
+    .envoltura::before,.envoltura::after{width:54vw;height:430px}
+    .envoltura .pliegue{width:50vw;height:410px}
+
+    .f1{left:8%;top:170px}.f2{left:27%;top:110px}.f3{left:46%;top:145px}
+    .f4{left:65%;top:110px}.f5{left:81%;top:170px}.f6{left:17%;top:260px}
+    .f7{left:46%;top:285px}.f8{left:70%;top:260px}
+
+    .t1{height:350px;transform:translateX(-50%) rotate(-34deg)}
+    .t2{height:360px;transform:translateX(-50%) rotate(-12deg)}
+    .t3{height:350px;transform:translateX(-50%) rotate(7deg)}
+    .t4{height:360px;transform:translateX(-50%) rotate(12deg)}
+    .t5{height:350px;transform:translateX(-50%) rotate(34deg)}
+    .t6{height:275px;transform:translateX(-50%) rotate(-34deg)}
+    .t7{height:500px;transform:translateX(-50%) rotate(18deg)}
+    .t8{height:275px;transform:translateX(-50%) rotate(34deg)}
+
+    .carreras{top:90px;width:100vw;height:390px}
+    .carrito{width:112px}
+    .carrito:nth-child(1){left:0%;top:80px}
+    .carrito:nth-child(2){left:24%;top:0}
+    .carrito:nth-child(3){right:24%;top:0}
+    .carrito:nth-child(4){right:0%;top:80px}
+    .carrito:nth-child(5){left:31%;top:160px}
+    .carrito:nth-child(6){right:31%;top:175px}
+
+    .carrito.aparecido:nth-child(1){transform:rotate(-10deg) scale(.86)}
+    .carrito.aparecido:nth-child(2){transform:rotate(-4deg) scale(.86)}
+    .carrito.aparecido:nth-child(3){transform:rotate(4deg) scale(.86)}
+    .carrito.aparecido:nth-child(4){transform:rotate(10deg) scale(.86)}
+    .carrito.aparecido:nth-child(5){transform:rotate(-2deg) scale(.86)}
+    .carrito.aparecido:nth-child(6){transform:rotate(2deg) scale(.86)}
+}
+
+</style>
+</head>
+
+<body>
+
+
+    
+
+<section id="loading">
+    <div class="loader">
+        <h1>Preparando un Detalle 💙</h1>
+
+        <div class="pista">
+            <div class="pista-linea"></div>
+            <div class="loader-car">🏎️</div>
+        </div>
+
+        <div class="porcentaje" id="porcentaje">0%</div>
+        <div class="carga-sub">Preparando algo especial para ti 💙</div>
+    </div>
+</section>
+
+
+<main id="regalo">
+
+    <div class="estrellas"></div>
+    <div class="glow"></div>
+
+    <header class="encabezado">
+        <h2>Feliz Día de los<br>Hot Wheels Mi Amor🚘💙</h2>
+
+        <p>Te preparé algo un poquito diferente...</p>
+
+        <span class="instruccion">
+            ✨ Toca cada carrito para descubrir algo
+        </span>
+    </header>
+
+
+    <section class="ramo">
+
+        <!-- Tallos -->
+        <div class="tallo t1"></div>
+        <div class="tallo t2"></div>
+        <div class="tallo t3"></div>
+        <div class="tallo t4"></div>
+        <div class="tallo t5"></div>
+        <div class="tallo t6"></div>
+        <div class="tallo t7"></div>
+        <div class="tallo t8"></div>
+
+        <!-- Hojas -->
+        <div class="hoja h1"></div>
+        <div class="hoja h2"></div>
+        <div class="hoja h3"></div>
+        <div class="hoja h4"></div>
+        <div class="hoja h5"></div>
+        <div class="hoja h6"></div>
+
+        <!-- Rosas azules -->
+        <div class="flor f1">
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="centro"></div>
+        </div>
+
+        <div class="flor f2">
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="centro"></div>
+        </div>
+
+        <div class="flor f3">
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="centro"></div>
+        </div>
+
+        <div class="flor f4">
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="centro"></div>
+        </div>
+
+        <div class="flor f5">
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="centro"></div>
+        </div>
+
+        <div class="flor f6">
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="centro"></div>
+        </div>
+
+        <div class="flor f7">
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="centro"></div>
+        </div>
+
+        <div class="flor f8">
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="petalo"></div><div class="petalo"></div><div class="petalo"></div>
+            <div class="centro"></div>
+        </div>
+
+
+        <div class="carreras">
+
+            <button class="carrito"
+                data-imagen="imagenes/Carrito1.png"
+                data-titulo="Para ti 💙"
+                data-mensaje="Si pudiera regalarte algo por cada vez que pienso en ti, tendría que llenar el mundo entero de flores.">
+                <img src="imagenes/Carrito1.png" alt="Hot Wheels 1">
+            </button>
+
+            <button class="carrito"
+                data-imagen="imagenes/carrito2.png"
+                data-titulo="Una notita para ti ✨"
+                data-mensaje="Gracias por estar conmigo, por compartir tantos momentos y por hacer que incluso los días normales tengan algo especial">
+                <img src="imagenes/carrito2.png" alt="Hot Wheels 2">
+            </button>
+
+            <button class="carrito"
+                data-imagen="imagenes/carrito3.png"
+                data-titulo="Mi favorito 🏎️"
+                data-mensaje="o sé qué nos espera más adelante, pero sí sé que quiero seguir recorriendo muchos caminos contigo y vivir muchas aventuras a tu lado.">
+                <img src="imagenes/carrito3.png" alt="Hot Wheels 3">
+            </button>
+
+            <button class="carrito"
+                data-imagen="imagenes/carrito4.png"
+                data-titulo="Para recordarte 💙"
+                data-mensaje="Quizá no siempre encuentre las palabras para decirte todo lo que siento, pero espero que con cada pequeño detalle puedas sentir lo mucho que te quiero.">
+                <img src="imagenes/carrito4.png" alt="Hot Wheels 4">
+            </button>
+
+            <button class="carrito"
+                data-imagen="imagenes/carrito5.png"
+                data-titulo="Con mucho cariño"
+                data-mensaje="Te hice este ramo porque quería darte algo que fuera diferente y que tuviera un poquito de nosotros. Entre flores, carritos y cada pequeño detalle, puse mucho cariño para ti. Espero que cuando lo veas recuerdes que hay alguien que te quiere muchísimo y que está muy feliz de compartir su vida contigo. Te amo mucho, mi amor.">
+                <img src="imagenes/carrito5.png" alt="Hot Wheels 5">
+            </button>
+
+            <button class="carrito"
+                data-imagen="imagenes/carrito6.png"
+                data-titulo="Y uno más... 🥹"
+                data-mensaje="Y si llegaste hasta aquí… solo quería decirte que espero que nunca olvides lo especial que eres para mí. Este ramo es pequeño comparado con todo lo que quisiera regalarte, pero está hecho con muchísimo cariño para ti. Te amoooo mi esposito Lindo....!!!! 💙">
+                <img src="imagenes/carrito6.png" alt="Hot Wheels 6">
+            </button>
+
+        </div>
+
+
+
+        <div class="envoltura">
+            <div class="pliegue"></div>
+        </div>
+
+
+        <div class="liston">
+            <div class="ala izq"></div>
+            <div class="ala der"></div>
+            <div class="nudo"></div>
+        </div>
+
+    </section>
+
+</main>
+
+
+<div id="visor">
+
+    <div class="escena-tarjeta">
+
+        <div class="tarjeta" id="tarjeta">
+
+
+            <div class="cara frente">
+                <img id="imagenGrande" src="" alt="Hot Wheels">
+            </div>
+
+            <div class="cara atras">
+
+                <div class="contenido">
+                    <div class="icono">💌</div>
+
+                    <h3 id="mensajeTitulo"></h3>
+
+                    <p id="mensajeTexto"></p>
+
+                    <button class="cerrar" onclick="cerrarTarjeta(event)">
+                        Cerrar 💙
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let progreso = 0;
+
+const porcentaje = document.getElementById("porcentaje");
+
+const carga = setInterval(() => {
+
+    progreso += Math.floor(Math.random() * 5) + 1;
+
+    if(progreso >= 100){
+
+        progreso = 100;
+        clearInterval(carga);
+
+        setTimeout(() => {
+
+            document.getElementById("loading").classList.add("oculto");
+            document.getElementById("regalo").classList.add("visible");
+
+            iniciarCarritos();
+
+        }, 800);
+    }
+
+    porcentaje.textContent = progreso + "%";
+
+}, 90);
+
+
+
+function iniciarCarritos(){
+
+    const carritos = document.querySelectorAll(".carrito");
+
+    carritos.forEach((carrito, indice) => {
+
+        setTimeout(() => {
+            carrito.classList.add("aparecido");
+        }, 650 + indice * 350);
+
+    });
+}
+
+
+
+const visor = document.getElementById("visor");
+const tarjeta = document.getElementById("tarjeta");
+const imagenGrande = document.getElementById("imagenGrande");
+const mensajeTitulo = document.getElementById("mensajeTitulo");
+const mensajeTexto = document.getElementById("mensajeTexto");
+
+
+document.querySelectorAll(".carrito").forEach(carrito => {
+
+    carrito.addEventListener("click", () => {
+
+        imagenGrande.src = carrito.dataset.imagen;
+        mensajeTitulo.textContent = carrito.dataset.titulo;
+        mensajeTexto.textContent = carrito.dataset.mensaje;
+
+        tarjeta.classList.remove("girada");
+
+        visor.classList.add("activo");
+
+        setTimeout(() => {
+            tarjeta.classList.add("girada");
+        }, 650);
+
+    });
+
+});
+
+
+
+tarjeta.addEventListener("click", (evento) => {
+
+    if(evento.target.classList.contains("cerrar")){
+        return;
+    }
+
+    tarjeta.classList.toggle("girada");
+
+});
+
+
+function cerrarTarjeta(evento){
+
+    if(evento){
+        evento.stopPropagation();
+    }
+
+    visor.classList.remove("activo");
+    tarjeta.classList.remove("girada");
+}
+
+
+
+visor.addEventListener("click", (evento) => {
+
+    if(evento.target === visor){
+        cerrarTarjeta();
+    }
+
+});
+
+
+document.addEventListener("keydown", (evento) => {
+
+    if(evento.key === "Escape"){
+        cerrarTarjeta();
+    }
+
+});
+</script>
+
+</body>
+</html>
